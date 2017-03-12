@@ -2,14 +2,6 @@ import numpy as np
 import random
 
 infinity = float('inf')
-print -infinity
-
-
-
-
-# def alphabeta(estado, profundidad, alfa, beta, jugador):
-#     if(jugador == 1):
-#         v = -infinity
        
 def getMoves(estado):
     libres = []
@@ -31,16 +23,20 @@ def alphabeta(state, depth, alpha, beta, player):
 
     if (player == 1):
         v = -infinity
+        newState = state
         for child in moves:
-            v = max(v, alphabeta(child, depth -1, alpha, beta, 2))
+            newState[child] = 1
+            v = max(v, alphabeta(newState, depth -1, alpha, beta, 2))
             alpha = max(alpha, v)
             if (beta <= alpha):
                 break
         return v
     else:
         v = infinity
+        newState = state
         for child in moves:
-            v = min(v, alphabeta(child, depth -1, alpha, beta, 1))
+            newState[child] = 2
+            v = min(v, alphabeta(newState, depth -1, alpha, beta, 1))
             beta = min(beta, v)
             if beta <= alpha:
                 break
@@ -51,12 +47,5 @@ def agente(state, player):
     
 
     
-tablero = np.zeros((5, 5))
-print agente(tablero, 2)
-vacios = getMoves(tablero)
-
-
-
-
-##https://github.com/aimacode/aima-python/blob/master/games.py
-##https://github.com/tllano11/AI/blob/master/Project1/Agente_Tomas_Mateo.py
+tablero = np.zeros((11, 11))
+print agente(tablero, 1)
