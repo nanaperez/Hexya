@@ -25,21 +25,23 @@ def alphabeta(state, depth, alpha, beta, player):
         v = -infinity
         newState = state
         for child in moves:
-            newState[child] = 1
+            newState[child] = 2
             v = max(v, alphabeta(newState, depth -1, alpha, beta, 2))
             alpha = max(alpha, v)
             if (beta <= alpha):
                 break
+        print newState
         return v
     else:
         v = infinity
         newState = state
         for child in moves:
-            newState[child] = 2
+            newState[child] = 1
             v = min(v, alphabeta(newState, depth -1, alpha, beta, 1))
             beta = min(beta, v)
             if beta <= alpha:
                 break
+        print newState
         return v
 
 def agente(state, player):
@@ -47,5 +49,5 @@ def agente(state, player):
     
 
     
-tablero = np.zeros((11, 11))
+tablero = np.zeros((8, 8))
 print agente(tablero, 1)
