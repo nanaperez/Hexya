@@ -13,43 +13,45 @@ def getMoves(estado):
     return libres
 
 
-def evaluate(estado):
+def evaluate(estado, player):
     function = random.randint(0, 11)
     return function
 
 
-def alphabeta(state, depth, alpha, beta, player):
+def alphabeta(state, depth, alpha, beta, player, oponente, maxi):
     moves = getMoves(state)
     if (depth == 0 or len(moves) == 0):
-        return evaluate(state)
+        return evaluate(state, player)
 
-    if (player == 1):
+    if (maxi):
         v = -infinity
         newState = state
         for child in moves:
-            newState[child] = 1
-            v = max(v, alphabeta(newState, depth - 1, alpha, beta, 2))
+            newState[child] = player
+            v = max(v, alphabeta(newState, depth - 1, alpha, beta, player, oponente, False))
             alpha = max(alpha, v)
             if (beta <= alpha):
                 break
-        print newState
         return v
     else:
         v = infinity
         newState = state
         for child in moves:
-            newState[child] = 2
-            v = min(v, alphabeta(newState, depth - 1, alpha, beta, 1))
+            newState[child] = oponente
+            v = min(v, alphabeta(newState, depth - 1, alpha, beta, player, oponente, True))
             beta = min(beta, v)
             if beta <= alpha:
                 break
-        print newState
         return v
 
 
-def agente(state, player):
-    return alphabeta(state, 100, -infinity, infinity, player)
+def agente_YeisonOsorio_AlejandraPerez(state, player):
+    if (player== 1):
+        oponente = 2
+    else:
+        oponente = 1
+    return alphabeta(state, 50, -infinity, infinity, player, oponente, True)
 
 
-tablero = np.zeros((11, 11))
-print agente(tablero, 1)
+#tablero = np.zeros((11, 11))
+#print agente_YeisonOsorio_AlejandraPerez(tablero, 2)
